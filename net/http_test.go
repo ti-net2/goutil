@@ -18,13 +18,14 @@ package net
 
 import (
 	"crypto/tls"
-	"golib/pkg/util/sets"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/seanchann/goutil/sets"
 )
 
 func TestCloneTLSConfig(t *testing.T) {
