@@ -39,6 +39,7 @@ func checkExternalIPV4(iface net.Interface) (external bool, ipv4 string) {
 	return
 }
 
+//ExternalIP get external ipv4 address on local machine.
 func ExternalIP() (string, error) {
 	ifaces, err := net.Interfaces()
 	if err != nil {
@@ -49,13 +50,12 @@ func ExternalIP() (string, error) {
 		external, ipv4 := checkExternalIPV4(iface)
 		if external {
 			return ipv4, nil
-		} else {
-			continue
 		}
 	}
 	return "", errors.New("are you connected to the network?")
 }
 
+//ExternalMAC get external mac address on local machine
 func ExternalMAC() (string, error) {
 	ifaces, err := net.Interfaces()
 	if err != nil {
@@ -66,8 +66,6 @@ func ExternalMAC() (string, error) {
 		external, _ := checkExternalIPV4(iface)
 		if external {
 			return iface.HardwareAddr.String(), nil
-		} else {
-			continue
 		}
 	}
 	return "", errors.New("are you connected to the network?")

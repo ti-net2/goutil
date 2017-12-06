@@ -56,6 +56,10 @@ type cacheEntry struct {
 	expireTime time.Time
 }
 
+func (c *LRUExpireCache) SetOnEvictedFunc(evictedFunc func(key Key, value interface{})) {
+	c.cache.OnEvicted = evictedFunc
+}
+
 func (c *LRUExpireCache) Add(key lru.Key, value interface{}, ttl time.Duration) {
 	c.lock.Lock()
 	defer c.lock.Unlock()
