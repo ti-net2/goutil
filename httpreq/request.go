@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/golang/glog"
+	"k8s.io/klog"
 )
 
 // Request allows for building up a request to a server in a chained fashion.
@@ -125,13 +125,13 @@ func (r *Request) Body(obj interface{}) *Request {
 // allocating a new string for the body output unless necessary. Uses a simple heuristic to determine
 // whether the body is printable.
 func glogBody(prefix string, body []byte) {
-	if glog.V(8) {
+	if klog.V(8) {
 		if bytes.IndexFunc(body, func(r rune) bool {
 			return r < 0x0a
 		}) != -1 {
-			glog.Infof("%s:\n%s", prefix, hex.Dump(body))
+			klog.Infof("%s:\n%s", prefix, hex.Dump(body))
 		} else {
-			glog.Infof("%s: %s", prefix, string(body))
+			klog.Infof("%s: %s", prefix, string(body))
 		}
 	}
 }
@@ -142,7 +142,7 @@ func (r *Request) Request(fn func(http.Request, *http.Response) error) error {
 	start := time.Now()
 
 	if r.err != nil {
-		glog.V(4).Infof("Error in request: %v", r.err)
+		klog.V(4).Infof("Error in request: %v", r.err)
 		return r.err
 	}
 
@@ -179,7 +179,7 @@ func (r *Request) Request(fn func(http.Request, *http.Response) error) error {
 		return true
 	}()
 
-	glog.V(9).Infof("request method(%v) (url:%v) end result(%v) Spend time (%vs)",
+	klog.V(9).Infof("request method(%v) (url:%v) end result(%v) Spend time (%vs)",
 		r.verb, url, done, time.Now().Second()-start.Second())
 	return err
 }

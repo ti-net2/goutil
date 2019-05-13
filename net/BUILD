@@ -22,7 +22,7 @@ go_library(
     tags = ["automanaged"],
     deps = [
         "//pkg/util/sets:go_default_library",
-        "//vendor:github.com/golang/glog",
+        "//vendor:k8s.io/klog",
         "//vendor:golang.org/x/net/http2",
     ],
 )

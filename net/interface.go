@@ -26,7 +26,7 @@ import (
 
 	"strings"
 
-	"github.com/golang/glog"
+	"k8s.io/klog"
 )
 
 type Route struct {
@@ -90,7 +90,7 @@ func isInterfaceUp(intf *net.Interface) bool {
 		return false
 	}
 	if intf.Flags&net.FlagUp != 0 {
-		glog.V(4).Infof("Interface %v is up", intf.Name)
+		klog.V(4).Infof("Interface %v is up", intf.Name)
 		return true
 	}
 	return false
@@ -102,7 +102,7 @@ func isInterfaceUp(intf *net.Interface) bool {
 func getFinalIP(addrs []net.Addr) (net.IP, error) {
 	if len(addrs) > 0 {
 		for i := range addrs {
-			glog.V(4).Infof("Checking addr  %s.", addrs[i].String())
+			klog.V(4).Infof("Checking addr  %s.", addrs[i].String())
 			ip, _, err := net.ParseCIDR(addrs[i].String())
 			if err != nil {
 				return nil, err
@@ -111,13 +111,13 @@ func getFinalIP(addrs []net.Addr) (net.IP, error) {
 			//TODO : add IPv6 support
 			if ip.To4() != nil {
 				if !ip.IsLoopback() && !ip.IsLinkLocalMulticast() && !ip.IsLinkLocalUnicast() {
-					glog.V(4).Infof("IP found %v", ip)
+					klog.V(4).Infof("IP found %v", ip)
 					return ip, nil
 				} else {
-					glog.V(4).Infof("Loopback/link-local found %v", ip)
+					klog.V(4).Infof("Loopback/link-local found %v", ip)
 				}
 			} else {
-				glog.V(4).Infof("%v is not a valid IPv4 address", ip)
+				klog.V(4).Infof("%v is not a valid IPv4 address", ip)
 			}
 
 		}
@@ -135,13 +135,13 @@ func getIPFromInterface(intfName string, nw networkInterfacer) (net.IP, error) {
 		if err != nil {
 			return nil, err
 		}
-		glog.V(4).Infof("Interface %q has %d addresses :%v.", intfName, len(addrs), addrs)
+		klog.V(4).Infof("Interface %q has %d addresses :%v.", intfName, len(addrs), addrs)
 		finalIP, err := getFinalIP(addrs)
 		if err != nil {
 			return nil, err
 		}
 		if finalIP != nil {
-			glog.V(4).Infof("valid IPv4 address for interface %q found as %v.", intfName, finalIP)
+			klog.V(4).Infof("valid IPv4 address for interface %q found as %v.", intfName, finalIP)
 			return finalIP, nil
 		}
 	}
@@ -191,7 +191,7 @@ func chooseHostInterfaceNativeGo() (net.IP, error) {
 	if ip == nil {
 		return nil, fmt.Errorf("no acceptable interface from host")
 	}
-	glog.V(4).Infof("Choosing interface %s (IP %v) as default", intfs[i].Name, ip)
+	klog.V(4).Infof("Choosing interface %s (IP %v) as default", intfs[i].Name, ip)
 	return ip, nil
 }
 
@@ -245,18 +245,18 @@ func chooseHostInterfaceFromRoute(inFile io.Reader, nw networkInterfacer) (net.I
 	for i := range routes {
 		//find interface with gateway
 		if routes[i].Destination.Equal(zero) {
-			glog.V(4).Infof("Default route transits interface %q", routes[i].Interface)
+			klog.V(4).Infof("Default route transits interface %q", routes[i].Interface)
 			finalIP, err := getIPFromInterface(routes[i].Interface, nw)
 			if err != nil {
 				return nil, err
 			}
 			if finalIP != nil {
-				glog.V(4).Infof("Choosing IP %v ", finalIP)
+				klog.V(4).Infof("Choosing IP %v ", finalIP)
 				return finalIP, nil
 			}
 		}
 	}
-	glog.V(4).Infof("No valid IP found")
+	klog.V(4).Infof("No valid IP found")
 	if finalIP == nil {
 		return nil, fmt.Errorf("Unable to select an IP.")
 	}

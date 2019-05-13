@@ -20,7 +20,7 @@ import (
 	goflag "flag"
 	"strings"
 
-	"github.com/golang/glog"
+	"k8s.io/klog"
 
 	"github.com/spf13/pflag"
 )
@@ -37,7 +37,7 @@ func WordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 func WarnWordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
 	if strings.Contains(name, "_") {
 		nname := strings.Replace(name, "_", "-", -1)
-		glog.Warningf("%s is DEPRECATED and will be removed in a future version. Use %s instead.", name, nname)
+		klog.Warningf("%s is DEPRECATED and will be removed in a future version. Use %s instead.", name, nname)
 
 		return pflag.NormalizedName(nname)
 	}

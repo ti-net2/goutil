@@ -27,7 +27,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/golang/glog"
+	"k8s.io/klog"
 	"golang.org/x/net/http2"
 )
 
@@ -79,10 +79,10 @@ func SetTransportDefaults(t *http.Transport) *http.Transport {
 	t = SetOldTransportDefaults(t)
 	// Allow clients to disable http2 if needed.
 	if s := os.Getenv("DISABLE_HTTP2"); len(s) > 0 {
-		glog.Infof("HTTP2 has been explicitly disabled")
+		klog.Infof("HTTP2 has been explicitly disabled")
 	} else {
 		if err := http2.ConfigureTransport(t); err != nil {
-			glog.Warningf("Transport failed http2 configuration: %v", err)
+			klog.Warningf("Transport failed http2 configuration: %v", err)
 		}
 	}
 	return t
