@@ -16,4 +16,4 @@ limitations under the License.
 
 // Package wait provides tools for polling or listening for changes
 // to a condition.
-package wait // import "github.com/seanchann/goutil/wait"
+package wait // import "github.com/ti-net2/goutil/wait"

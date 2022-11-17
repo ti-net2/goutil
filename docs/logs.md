@@ -6,8 +6,8 @@ example:
 package main
 
 import (
-  "github.com/seanchann/goutil/flag"
-  "github.com/seanchann/goutil/logs"
+  "github.com/ti-net2/goutil/flag"
+  "github.com/ti-net2/goutil/logs"
   "github.com/spf13/pflag"
 )
 

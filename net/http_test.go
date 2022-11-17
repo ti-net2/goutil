@@ -25,7 +25,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/seanchann/goutil/sets"
+	"github.com/ti-net2/goutil/sets"
 )
 
 func TestCloneTLSConfig(t *testing.T) {

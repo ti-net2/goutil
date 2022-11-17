@@ -18,7 +18,7 @@ limitations under the License.
 // contains a "go generate" block.
 package types
 
-//go:generate set-gen -i github.com/seanchann/goutil/sets/types
+//go:generate set-gen -i github.com/ti-net2/goutil/sets/types
 
 type ReferenceSetTypes struct {
 	// These types all cause files to be generated.

@@ -1,4 +1,4 @@
-module github.com/seanchann/goutil
+module github.com/ti-net2/goutil
 
 require (
 	github.com/golang/groupcache v0.0.0-20181024230925-c65c006176ff

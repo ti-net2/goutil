@@ -19,7 +19,7 @@ package net
 import (
 	"strings"
 
-	"github.com/seanchann/goutil/sets"
+	"github.com/ti-net2/goutil/sets"
 )
 
 var validSchemes = sets.NewString("http", "https", "")

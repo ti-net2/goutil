@@ -21,7 +21,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/seanchann/goutil/runtime"
+	"github.com/ti-net2/goutil/runtime"
 )
 
 // For any test of the style:
